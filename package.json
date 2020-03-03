@@ -1,0 +1,19 @@
+{
+  "name": "low-code-initiative",
+  "version": "1.0.0",
+  "description": "Low Code Initiative",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "low-code",
+    "initiative",
+    "vodafone"
+  ],
+  "author": "islam.gad2@vodafone.com",
+  "license": "ISC",
+  "dependencies": {
+    "cf-nodejs-client": "^0.13.0"
+  }
+}
