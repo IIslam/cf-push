@@ -14,6 +14,7 @@
   "author": "islam.gad2@vodafone.com",
   "license": "ISC",
   "dependencies": {
-    "cf-nodejs-client": "^0.13.0"
+    "cf-nodejs-client": "^0.13.0",
+    "dotenv": "^8.2.0"
   }
 }
