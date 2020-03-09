@@ -2,20 +2,14 @@
 require("dotenv").config();
 const { exec } = require("child_process");
 
-const cfPush = (path, callback, errorCallback) => {
+const cfPush = (path, appName, callback, errorCallback) => {
   const endpoint = process.env.ENDPOINT;
   const username = process.env.USER_NAME;
   const password = process.env.PASSWORD;
-
-  // console.log("End Point =>", endpoint);
-  // console.log("Username =>", username);
-
-  const lowCodeAppGUID = "41d24d5f-0761-4557-b754-56a1238de546";
-  const developmentSpaceGUID = "e9977f50-ca20-4dff-a049-e8626c44bfe8";
-  const filePath = `${__dirname}/application.zip`;
-  const lowCodeAppName = "low-code-app";
+  const organization = process.env.ORG;
+  const space = process.env.SPACE;
   exec(
-    `cf login -a ${endpoint} -u ${username} -p ${password} -o digital-coe -s development`,
+    `cf login -a ${endpoint} -u ${username} -p ${password} -o ${organization} -s ${space}`,
     (error, stdout, stderr) => {
       if (error) {
         console.log(`error: ${error.message}`);
@@ -28,7 +22,7 @@ const cfPush = (path, callback, errorCallback) => {
       console.log(`stdout: ${stdout}`);
 
       exec(
-        `cf push ${lowCodeAppName} -b staticfile_buildpack -p ./app`,
+        `cf push ${appName} -b staticfile_buildpack -p ${path}`,
         (error, stdout, stderr) => {
           if (error) {
             console.log(`error: ${error.message}`);
@@ -40,8 +34,7 @@ const cfPush = (path, callback, errorCallback) => {
           }
 
           let index = stdout.lastIndexOf("routes:");
-          console.log(index);
-          let url = `${stdout.substring(index, index + 100).split("\n")[0]}`;
+          let url = `${stdout.substring(index, index + 50).split("\n")[0]}`;
           console.log({ url });
           return callback({ url: url.split(":")[1] });
         }
